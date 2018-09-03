@@ -3,9 +3,13 @@ package com.system.entity;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="Tag")
 public class Tag {
+	@Id
 	private int tag_Id;
 	private String description;
 

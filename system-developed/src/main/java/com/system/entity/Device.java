@@ -1,10 +1,18 @@
 package com.system.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "Device")
 public class Device {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int device_Id;
+
 	private String description;
 
 	public enum status {
