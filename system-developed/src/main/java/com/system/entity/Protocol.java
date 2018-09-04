@@ -13,7 +13,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "Protocol")
+@Table(name = "PROTOCOL")
 public class Protocol {
 	@Id
 	@GeneratedValue
