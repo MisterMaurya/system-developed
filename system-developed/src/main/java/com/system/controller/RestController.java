@@ -6,8 +6,10 @@ import java.util.List;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.system.dao.impl.ProtocolDAOImpl;
+import com.system.dao.impl.UserDAOImpl;
 import com.system.entity.Device;
 import com.system.entity.Protocol;
+import com.system.entity.User;
 
 @org.springframework.web.bind.annotation.RestController
 public class RestController {
@@ -44,6 +46,13 @@ public class RestController {
 		List<Protocol> getAllProtocols = list.protocolList();
 		return getAllProtocols;
 
+	}
+
+	@RequestMapping("/getAllUser")
+	public List<User> getAllUser() {
+		UserDAOImpl list = new UserDAOImpl();
+		List<User> getAllUser = list.gerUserList();
+		return getAllUser;
 	}
 
 }
