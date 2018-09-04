@@ -12,7 +12,7 @@
 		<property name="connection.password">1000</property>
 
 		<!-- JDBC connection pool (use the built-in) -->
-		<property name="connection.pool_size">1</property>
+		<property name="connection.pool_size">13</property>
 
 		<!-- SQL dialect -->
 		<property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
@@ -27,10 +27,11 @@
 		<property name="hbm2ddl.auto">update</property>
 
 		<!-- Mention here all the model classes along with their package name -->
-		<mapping class="com.system.entity.User" />
+	<!-- 	<mapping class="com.system.entity.User" />
+		<mapping class="com.system.entity.Tag" /> -->
 		<mapping class="com.system.entity.Device" />
 		<mapping class="com.system.entity.Protocol" />
-		<mapping class="com.system.entity.Tag" />
+		
 		
 
 	</session-factory>

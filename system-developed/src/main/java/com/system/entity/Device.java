@@ -1,28 +1,22 @@
 package com.system.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "DEVICE")
 public class Device {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int device_Id;
-
-	private String description;
-
-	public enum status {
-		WORKING, IDLE, COMPLETE
-	}
-
-	private int operator_Id;
 	
-	private Protocol protocol;
+	private int device_Id;
+	private String description;
+	private int operator_Id;
 
+	@Id
+	@GeneratedValue
+	@Column(name = "DEVICE_ID")
 	public int getDevice_Id() {
 		return device_Id;
 	}
@@ -31,6 +25,7 @@ public class Device {
 		this.device_Id = device_Id;
 	}
 
+	@Column(name = "DESCRIPTION")
 	public String getDescription() {
 		return description;
 	}
@@ -39,6 +34,7 @@ public class Device {
 		this.description = description;
 	}
 
+	@Column(name = "OPERATOR_ID")
 	public int getOperator_Id() {
 		return operator_Id;
 	}
@@ -46,7 +42,5 @@ public class Device {
 	public void setOperator_Id(int operator_Id) {
 		this.operator_Id = operator_Id;
 	}
-
-	
 
 }

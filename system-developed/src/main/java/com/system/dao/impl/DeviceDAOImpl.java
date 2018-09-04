@@ -1,13 +1,9 @@
 package com.system.dao.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.hibernate.Session;
 
 import com.system.dao.DeviceDAO;
 import com.system.entity.Device;
-import com.system.entity.User;
 import com.system.services.DBConnect;
 
 public class DeviceDAOImpl implements DeviceDAO {
