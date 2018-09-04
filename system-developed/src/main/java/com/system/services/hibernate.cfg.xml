@@ -17,6 +17,7 @@
 		<!-- SQL dialect -->
 		<property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
 
+
 		<!-- Disable the second-level cache -->
 		<property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
 
@@ -27,8 +28,8 @@
 		<property name="hbm2ddl.auto">update</property>
 
 		<!-- Mention here all the model classes along with their package name -->
-	<!-- 	<mapping class="com.system.entity.User" />
-		<mapping class="com.system.entity.Tag" /> -->
+		<mapping class="com.system.entity.User" />
+		<mapping class="com.system.entity.Tag" />
 		<mapping class="com.system.entity.Device" />
 		<mapping class="com.system.entity.Protocol" />
 		

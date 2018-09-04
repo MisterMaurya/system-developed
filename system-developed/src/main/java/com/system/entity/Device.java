@@ -13,6 +13,17 @@ public class Device {
 	private int device_Id;
 	private String description;
 	private int operator_Id;
+	
+	
+	public Device() {
+		
+	}
+
+	public Device(String description, int operator_Id) {
+		super();
+		this.description = description;
+		this.operator_Id = operator_Id;
+	}
 
 	@Id
 	@GeneratedValue

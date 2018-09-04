@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.springframework.stereotype.Service;
 
 import com.system.dao.UserDAO;
 import com.system.entity.User;
 import com.system.services.DBConnect;
 
+@Service
 public class UserDAOImpl implements UserDAO {
 	DBConnect connect = null;
 	Session session = null;

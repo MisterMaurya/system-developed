@@ -1,25 +1,43 @@
 package com.system.entity;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name="User")
-@JsonIgnoreProperties({"email","user_Id"})
+@Table(name = "USER")
+@JsonIgnoreProperties({ "email" })
 public class User {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+
 	private int user_Id;
 	private String user_Name;
 	private String email;
-	private int device_Id;
-	private int Tag_Id;
+	private Tag tag;
 
+	public User(String user_Name, String email, Tag tag) {
+		super();
+		this.user_Name = user_Name;
+		this.email = email;
+		this.tag = tag;
+
+	}
+
+	public User() {
+
+	}
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@PrimaryKeyJoinColumn
+	@Column(name = "USER_ID")
 	public int getUser_Id() {
 		return user_Id;
 	}
@@ -28,6 +46,7 @@ public class User {
 		this.user_Id = user_Id;
 	}
 
+	@Column(name = "USER_NAME")
 	public String getUser_Name() {
 		return user_Name;
 	}
@@ -36,6 +55,7 @@ public class User {
 		this.user_Name = user_Name;
 	}
 
+	@Column(name = "EMAIL")
 	public String getEmail() {
 		return email;
 	}
@@ -44,20 +64,14 @@ public class User {
 		this.email = email;
 	}
 
-	public int getDevice_Id() {
-		return device_Id;
+	@OneToOne(cascade = CascadeType.ALL, targetEntity = Tag.class)
+	@Column(name = "TAG")
+	public Tag getTag() {
+		return tag;
 	}
 
-	public void setDevice_Id(int device_Id) {
-		this.device_Id = device_Id;
-	}
-
-	public int getTag_Id() {
-		return Tag_Id;
-	}
-
-	public void setTag_Id(int tag_Id) {
-		Tag_Id = tag_Id;
+	public void setTag(Tag tag) {
+		this.tag = tag;
 	}
 
 }

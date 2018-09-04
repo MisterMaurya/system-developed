@@ -1,11 +1,13 @@
 package com.system.dao.impl;
 
 import org.hibernate.Session;
+import org.springframework.stereotype.Service;
 
 import com.system.dao.DeviceDAO;
 import com.system.entity.Device;
 import com.system.services.DBConnect;
 
+@Service
 public class DeviceDAOImpl implements DeviceDAO {
 	DBConnect connect = null;
 	Session session = null;

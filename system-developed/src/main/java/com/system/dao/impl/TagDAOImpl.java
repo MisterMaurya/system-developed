@@ -1,11 +1,13 @@
 package com.system.dao.impl;
 
 import org.hibernate.Session;
+import org.springframework.stereotype.Service;
 
 import com.system.dao.TagDAO;
 import com.system.entity.Tag;
 import com.system.services.DBConnect;
 
+@Service
 public class TagDAOImpl implements TagDAO {
 	DBConnect connect = null;
 	Session session = null;

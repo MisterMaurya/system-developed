@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.springframework.stereotype.Service;
 
 import com.system.dao.ProtocolDAO;
 import com.system.entity.Protocol;
-import com.system.entity.User;
 import com.system.services.DBConnect;
 
+@Service
 public class ProtocolDAOImpl implements ProtocolDAO {
 	DBConnect connect = null;
 	Session session = null;
