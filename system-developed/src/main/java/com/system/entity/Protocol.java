@@ -7,37 +7,28 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "Protocol")
 public class Protocol {
 	@Id
-	@GeneratedValue(generator = "newGenerator")
-	@GenericGenerator(name = "newGenerator", strategy = "foreign", parameters = {
-			@Parameter(value = "device", name = "property") })
-	@Column(name = "ID")
+	@GeneratedValue
+	@Column(name = "PROTOCOL_ID")
 	private int protocol_id;
+	@Column(name = "TITLE", nullable = false)
 	private String title;
+	@Column(name = "CREATED_ON", nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date created_On;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "EFFECTIVITY_DATE", nullable = false)
 	private Date effectivity_date;
-	
-	@OneToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="device_Id")
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Device device;
-
-	public Device getDevice() {
-		return device;
-	}
-
-	public void setDevice(Device device) {
-		this.device = device;
-	}
 
 	public int getProtocol_id() {
 		return protocol_id;
@@ -69,6 +60,14 @@ public class Protocol {
 
 	public void setEffectivity_date(Date effectivity_date) {
 		this.effectivity_date = effectivity_date;
+	}
+
+	public Device getDevice() {
+		return device;
+	}
+
+	public void setDevice(Device device) {
+		this.device = device;
 	}
 
 }

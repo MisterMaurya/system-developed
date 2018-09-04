@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Device")
+@Table(name = "DEVICE")
 public class Device {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +20,8 @@ public class Device {
 	}
 
 	private int operator_Id;
-	private int protocol_Id;
+	
+	private Protocol protocol;
 
 	public int getDevice_Id() {
 		return device_Id;
@@ -46,12 +47,6 @@ public class Device {
 		this.operator_Id = operator_Id;
 	}
 
-	public int getProtocol_Id() {
-		return protocol_Id;
-	}
-
-	public void setProtocol_Id(int protocol_Id) {
-		this.protocol_Id = protocol_Id;
-	}
+	
 
 }

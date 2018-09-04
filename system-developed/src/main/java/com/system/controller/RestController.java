@@ -12,6 +12,13 @@ import com.system.entity.User;
 @org.springframework.web.bind.annotation.RestController
 public class RestController {
 
+	@RequestMapping("/home")
+	public String home() {
+		System.out.println("hello");
+		return "hello";
+	}
+	
+	
 	@RequestMapping(value = "/getList", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<User> getList() {
 		UserDAOImpl list = new UserDAOImpl();
