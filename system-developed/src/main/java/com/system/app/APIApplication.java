@@ -21,7 +21,6 @@ public class APIApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
 		SpringApplication.run(APIApplication.class, args);
-
 	}
 
 }
