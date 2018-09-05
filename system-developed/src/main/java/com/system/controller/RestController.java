@@ -1,69 +1,33 @@
 package com.system.controller;
 
-import java.util.Date;
+import java.text.ParseException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.system.dao.impl.ProtocolDAOImpl;
-import com.system.dao.impl.TagDAOImpl;
+import com.system.dao.impl.DeviceDAOImpl;
 import com.system.dao.impl.UserDAOImpl;
 import com.system.entity.Device;
 import com.system.entity.Protocol;
 import com.system.entity.Tag;
 import com.system.entity.User;
+import com.system.services.FormatedDate;
 
+//this annotation are treated as controllers 
 @org.springframework.web.bind.annotation.RestController
+
 @ComponentScan(basePackages = { "com.system.dao.impl" })
 public class RestController {
 
 	@Autowired
-	private ProtocolDAOImpl pro1;
+	private UserDAOImpl users;
 
 	@Autowired
-	private ProtocolDAOImpl pro2;
-
-	@Autowired
-	private TagDAOImpl tag;
-
-	@Autowired
-	private UserDAOImpl user;
-
-	@RequestMapping("/addDeviceProtocol")
-	public Device addProtocolAndDevice() {
-
-		Device device = new Device();
-		device.setDescription("Device 1");
-		device.setOperator_Id(1);
-
-		Protocol protocol1 = new Protocol();
-		protocol1.setTitle("protocol: 3");
-		protocol1.setCreated_On(new Date());
-		protocol1.setEffectivity_date(new Date());
-		protocol1.setDevice(device);
-
-		Protocol protocol2 = new Protocol();
-		protocol2.setTitle("protocol: 4");
-		protocol2.setCreated_On(new Date());
-		protocol2.setEffectivity_date(new Date());
-		protocol2.setDevice(device);
-
-		pro1.addProtocol(protocol1);
-		pro2.addProtocol(protocol2);
-
-		return device;
-
-	}
-
-	@RequestMapping("/listProtocol")
-	public List<Protocol> protocolList() {
-		ProtocolDAOImpl list = new ProtocolDAOImpl();
-		List<Protocol> getAllProtocols = list.protocolList();
-		return getAllProtocols;
-
-	}
+	private DeviceDAOImpl devices;
 
 	@RequestMapping("/getAllUser")
 	public List<User> getAllUser() {
@@ -72,11 +36,36 @@ public class RestController {
 		return getAllUser;
 	}
 
-	@RequestMapping(value = "/user/device")
-	public User userInteractionWithDevice() {
-		Tag tag1 = new Tag("tag1", true, new Date());
-		User user1 = new User("Pawan", "abc@gmail.com", tag1);
-		user.saveUser(user1);
-		return user1;
+	@RequestMapping(value = "/device")
+	public Device[] deviceInfo() throws ParseException {
+		Set<Protocol> protocols1 = new HashSet<Protocol>();
+		protocols1.add(new Protocol("Secure Shell", FormatedDate.dateFormat("02-09-2018"),
+				FormatedDate.dateFormat("03-10-2018")));
+		protocols1.add(new Protocol("Secure Sockets Layer", FormatedDate.dateFormat("03-09-2018"),
+				FormatedDate.dateFormat("04-10-2018")));
+
+		Set<Protocol> protocols2 = new HashSet<Protocol>();
+		protocols2.add(new Protocol("Simple Mail Transfer Protocol", FormatedDate.dateFormat("04-09-2018"),
+				FormatedDate.dateFormat("05-10-2018")));
+
+		Device device[] = new Device[2];
+		device[0] = new Device("HVAC Professional", "working", 1, protocols1);
+		device[1] = new Device("Marketing ", "completed", 2, protocols2);
+		devices.insertDevice(device[0]);
+		devices.insertDevice(device[1]);
+		return device;
 	}
+
+	
+	
+	@RequestMapping(value = "/user")
+	public User userInfo() throws ParseException {
+		Set<Device> device = new HashSet<Device>();
+		device.add(devices.getDevice(3));
+		Tag tag = new Tag("Java", true, FormatedDate.dateFormat("02-09-2018"));
+		User user = new User("Tanay", "abc@gmail.com", device, tag);
+		users.saveUser(user);
+		return user;
+	}
+
 }

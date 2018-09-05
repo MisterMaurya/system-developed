@@ -7,24 +7,32 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-@Entity
-@Table(name = "TAG")
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@Entity //Specifies that the class is an entity
+@Table(name = "TAG") //specified for an entity class, and default value apply
 public class Tag {
 
+	//Property name refers to name used externally, as the field name in JSON objects.
+	@JsonProperty("Tag_Id")
 	private int tag_Id;
+	@JsonProperty("Description")
 	private String description;
+	@JsonProperty("Is_Active")
 	private boolean is_Active;
+	@JsonProperty("Created_On")
 	private Date created_On;
-	private User user;
-
+	
+	// Initializes default constructor
 	public Tag() {
+		
 	}
 
+	//Initializes field constructor
 	public Tag(String description, boolean is_Active, Date created_On) {
 		super();
 		this.description = description;
@@ -32,9 +40,11 @@ public class Tag {
 		this.created_On = created_On;
 	}
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "TAG_ID")
+	/*All Getters and Setters method*/
+
+	@Id                                               //Specifies the primary key of an entity
+	@GeneratedValue(strategy = GenerationType.AUTO)   //Provides for the specification of generation strategies for the values of primary keys.
+	@Column(name = "TAG_ID")                          //Is used to specify the mapped column for a persistent property or field
 	public int getTag_Id() {
 		return tag_Id;
 	}
@@ -69,15 +79,6 @@ public class Tag {
 
 	public void setCreated_On(Date created_On) {
 		this.created_On = created_On;
-	}
-
-	@OneToOne(targetEntity = User.class)
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
 	}
 
 }

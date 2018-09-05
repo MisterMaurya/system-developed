@@ -1,5 +1,9 @@
 package com.system.dao.impl;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
 import org.hibernate.Session;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +34,28 @@ public class DeviceDAOImpl implements DeviceDAO {
 		return true;
 	}
 
-	
+	@Override
+	public Device getDevice(int device_Id) {
+		connect = new DBConnect();
+		session = connect.getSession();
+		Device device = null;
+		try {
+			session.beginTransaction();
+			CriteriaBuilder builder = session.getCriteriaBuilder();
+			CriteriaQuery<Device> query = builder.createQuery(Device.class);
+			Root<Device> root = query.from(Device.class);
+
+			query.select(root).where(builder.equal(root.get("device_Id"), device_Id));
+			device = session.createQuery(query).getSingleResult();
+			session.getTransaction().commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+
+		} finally {
+			session.close();
+		}
+		return device;
+	}
 
 }
