@@ -43,29 +43,34 @@ public class RestController {
 				FormatedDate.dateFormat("03-10-2018")));
 		protocols1.add(new Protocol("Secure Sockets Layer", FormatedDate.dateFormat("03-09-2018"),
 				FormatedDate.dateFormat("04-10-2018")));
-
+		
 		Set<Protocol> protocols2 = new HashSet<Protocol>();
 		protocols2.add(new Protocol("Simple Mail Transfer Protocol", FormatedDate.dateFormat("04-09-2018"),
 				FormatedDate.dateFormat("05-10-2018")));
-
-		Device device[] = new Device[2];
+		
+		Device[] device = new Device[2];
 		device[0] = new Device("HVAC Professional", "working", 1, protocols1);
-		device[1] = new Device("Marketing ", "completed", 2, protocols2);
-		devices.insertDevice(device[0]);
+        device[1] = new Device("Marketing","completed",2,protocols2);
+        
+        devices.insertDevice(device[0]);
 		devices.insertDevice(device[1]);
 		return device;
 	}
 
-	
-	
 	@RequestMapping(value = "/user")
 	public User userInfo() throws ParseException {
 		Set<Device> device = new HashSet<Device>();
-		device.add(devices.getDevice(3));
+		device.add(devices.getDevice(1));
 		Tag tag = new Tag("Java", true, FormatedDate.dateFormat("02-09-2018"));
 		User user = new User("Tanay", "abc@gmail.com", device, tag);
 		users.saveUser(user);
 		return user;
+	}
+
+	@RequestMapping(value = "/getdevice")
+	public void getDeviceInfo() {
+		Device device = devices.getDevice(1);
+		System.out.println(device.getDescription());
 	}
 
 }

@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -15,17 +16,11 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity // Specifies that the class is an entity
 @Table(name = "USER") // specified for an entity class, and default value apply
-
-/*
- * Annotation that can be used to either suppress serialization of properties
- * (during serialization), or ignore processing ofJSON properties read
- * 
- */
 
 public class User {
 
@@ -39,10 +34,11 @@ public class User {
 	@JsonProperty("UserName")
 	private String user_Name;
 
+	@JsonIgnore(value = false)
 	@JsonProperty("Email")
 	private String email;
 
-	@JsonProperty("Devices")
+	// @JsonProperty("Devices")
 	private Set<Device> device = new HashSet<Device>(0);
 
 	@JsonProperty("Tag_id")
@@ -97,7 +93,7 @@ public class User {
 		this.email = email;
 	}
 
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "DEVICE_USER_MAP", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = {
 			@JoinColumn(name = "DEVICE_ID") })
 	public Set<Device> getdevice() {
@@ -109,7 +105,6 @@ public class User {
 	}
 
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="Tag_Id")
 	public Tag getTag_Id() {
 		return tag_Id;
 	}

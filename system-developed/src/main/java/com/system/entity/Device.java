@@ -1,10 +1,12 @@
 package com.system.entity;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -16,8 +18,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity // Specifies that the class is an entity
 @Table(name = "DEVICE") // specified for an entity class, and default value apply
-
-
 public class Device {
 
 	// Property name refers to name used externally, as the field name in JSON
@@ -34,8 +34,8 @@ public class Device {
 	@JsonProperty("Operator_Id")
 	private int operator_Id;
 
-	/*@JsonProperty("Protocols")*/
-	private Set<Protocol> protocol_Id;
+	 @JsonProperty("Protocols")
+	private Set<Protocol> protocol_Id = new HashSet<Protocol>(0);
 
 	// Initializes default constructor
 	public Device() {
@@ -93,7 +93,7 @@ public class Device {
 		this.operator_Id = operator_Id;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "DEVICE_PROTOCOL", joinColumns = { @JoinColumn(name = "DEVICE_ID") }, inverseJoinColumns = {
 			@JoinColumn(name = "PROTOCOL_ID") })
 	public Set<Protocol> getProtocol_Id() {
