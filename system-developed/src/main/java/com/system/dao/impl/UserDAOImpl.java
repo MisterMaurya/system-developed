@@ -3,6 +3,10 @@ package com.system.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
 import org.hibernate.Session;
 import org.springframework.stereotype.Service;
 
@@ -50,6 +54,29 @@ public class UserDAOImpl implements UserDAO {
 			session.close();
 		}
 		return list;
+	}
+
+	@Override
+	public boolean isUserExists(int user_Id) {
+		connect = new DBConnect();
+		session = connect.getSession();
+		User user = null;
+		try {
+			session.beginTransaction();
+			CriteriaBuilder builder = session.getCriteriaBuilder();
+			CriteriaQuery<User> query = builder.createQuery(User.class);
+			Root<User> root = query.from(User.class);
+
+			query.select(root).where(builder.equal(root.get("user_Id"), user_Id));
+			user = session.createQuery(query).getSingleResult();
+			session.getTransaction().commit();
+		} catch (Exception e) {
+			return false;
+
+		} finally {
+			session.close();
+		}
+		return true;
 	}
 
 }

@@ -58,4 +58,27 @@ public class DeviceDAOImpl implements DeviceDAO {
 		return device;
 	}
 
+	@Override
+	public boolean isDeviceExists(int device_Id) {
+		connect = new DBConnect();
+		session = connect.getSession();
+		Device device = null;
+		try {
+			session.beginTransaction();
+			CriteriaBuilder builder = session.getCriteriaBuilder();
+			CriteriaQuery<Device> query = builder.createQuery(Device.class);
+			Root<Device> root = query.from(Device.class);
+
+			query.select(root).where(builder.equal(root.get("device_Id"), device_Id));
+			device = session.createQuery(query).getSingleResult();
+			session.getTransaction().commit();
+		} catch (Exception e) {
+			return false;
+
+		} finally {
+			session.close();
+		}
+		return true;
+	}
+
 }

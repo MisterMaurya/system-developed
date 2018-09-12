@@ -34,7 +34,8 @@ public class User {
 	@JsonProperty("UserName")
 	private String user_Name;
 
-	@JsonIgnore(value = false)
+
+	@JsonIgnore //would be ignored and no such property would be output 
 	@JsonProperty("Email")
 	private String email;
 
