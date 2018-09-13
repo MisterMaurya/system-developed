@@ -11,6 +11,7 @@ import org.hibernate.Session;
 import org.springframework.stereotype.Service;
 
 import com.system.dao.UserDAO;
+import com.system.entity.Device;
 import com.system.entity.User;
 import com.system.services.DBConnect;
 
@@ -77,6 +78,30 @@ public class UserDAOImpl implements UserDAO {
 			session.close();
 		}
 		return true;
+	}
+
+	@Override
+	public User getUser(int User) {
+		connect = new DBConnect();
+		session = connect.getSession();
+		User user = null;
+		try {
+			session.beginTransaction();
+			CriteriaBuilder builder = session.getCriteriaBuilder();
+			CriteriaQuery<User> query = builder.createQuery(User.class);
+			Root<User> root = query.from(User.class);
+
+			query.select(root).where(builder.equal(root.get("user_Id"), User));
+			user = session.createQuery(query).getSingleResult();
+			session.getTransaction().commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+
+		} finally {
+			session.close();
+		}
+		return user;
 	}
 
 }

@@ -32,10 +32,11 @@
 		<mapping class="com.system.entity.Tag" />
 		<mapping class="com.system.entity.Device" />
 		<mapping class="com.system.entity.Protocol" />
-		
-		
-		
-		
+		<mapping class="com.system.entity.DeviceUserMap" />
+
+
+
+
 
 	</session-factory>
 </hibernate-configuration>

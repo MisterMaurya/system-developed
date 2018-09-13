@@ -13,11 +13,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.system.dao.impl.DeviceDAOImpl;
+import com.system.dao.impl.DeviceUserMapDAOImpl;
 import com.system.dao.impl.ProtocolDAOImpl;
 import com.system.dao.impl.TagDAOImpl;
+import com.system.dao.impl.UserDAOImpl;
 import com.system.entity.Device;
+import com.system.entity.DeviceUserMap;
 import com.system.entity.Protocol;
 import com.system.entity.Tag;
+import com.system.entity.User;
 import com.system.services.FormatedDate;
 
 @RestController
@@ -31,7 +35,13 @@ public class HomeController {
 	private DeviceDAOImpl dev;
 
 	@Autowired
-	TagDAOImpl tags;
+	private TagDAOImpl tags;
+
+	@Autowired
+	private UserDAOImpl usr;
+
+	@Autowired
+	private DeviceUserMapDAOImpl map;
 
 	@RequestMapping(value = "/protocols", method = RequestMethod.GET)
 	public String addProtocols(@RequestParam Map<String, String> var) throws ParseException {
@@ -116,4 +126,43 @@ public class HomeController {
 	public List<Tag> getTags(@PathVariable("tagId") int tagId) throws Exception {
 		return tags.getList(tagId);
 	}
+
+	@RequestMapping(value = "/users")
+	public String addUser(@RequestParam Map<String, String> var) {
+		String user_Name = var.get("name");
+		String email = var.get("email");
+		String tag_Id = var.get("tagId");
+		User user = null;
+		boolean check = tags.isTagsExists(Integer.parseInt(tag_Id));
+		if (!check) {
+			return "Please provide a valid tag id";
+		}
+		user = new User(user_Name, email, tags.getTags(Integer.parseInt(tag_Id)));
+		usr.saveUser(user);
+		return "User Successfully added";
+	}
+
+	@RequestMapping(value = "/users/relation/devices")
+	public String establishRelationship(@RequestParam Map<String, String> var)
+			throws NumberFormatException, ParseException {
+		String user_Id = var.get("uId");
+		String device_Id = var.get("dId");
+		String is_Active = var.get("status");
+		DeviceUserMap deviceUserMap = new DeviceUserMap(usr.getUser(Integer.parseInt(user_Id)),
+				dev.getDevice(Integer.parseInt(device_Id)), is_Active,
+				FormatedDate.dateFormat(FormatedDate.currentDateTime()));
+
+		map.saveDeviceUserMap(deviceUserMap);
+
+		return "relationship successfully estabilish";
+
+	}
+
+	@RequestMapping("/users/list")
+	public List<User> getAllUser() {
+		UserDAOImpl list = new UserDAOImpl();
+		List<User> getAllUser = list.gerUserList();
+		return getAllUser;
+	}
+
 }

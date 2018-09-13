@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -34,6 +36,17 @@ public class Device {
 
 	@JsonProperty("Protocols_Id")
 	private Set<Protocol> protocol_Id = new HashSet<Protocol>(0);
+
+	private Set<DeviceUserMap> device = new HashSet<DeviceUserMap>(0);
+
+	@OneToMany(mappedBy = "device", fetch = FetchType.EAGER)
+	public Set<DeviceUserMap> getDevice() {
+		return device;
+	}
+
+	public void setDevice(Set<DeviceUserMap> device) {
+		this.device = device;
+	}
 
 	// Initializes default constructor
 	public Device() {

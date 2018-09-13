@@ -116,8 +116,4 @@ public class Tag {
 		this.mapping_Id = mapping_Id;
 	}
 
-
-	
-	
-
 }
