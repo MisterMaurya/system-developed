@@ -13,5 +13,5 @@ public interface TagDAO {
 
 	public boolean isTagsExists(int tag_Id);
 
-	public List<Tag> getList(int mappingId);
+	public List<Tag> getList(int tagId) throws Exception;
 }

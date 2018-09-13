@@ -1,5 +1,8 @@
 package com.system.dao.impl;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -11,8 +14,8 @@ import org.springframework.stereotype.Service;
 
 import com.system.dao.TagDAO;
 import com.system.entity.Tag;
-import com.system.entity.User;
 import com.system.services.DBConnect;
+import com.system.services.FormatedDate;
 
 @Service
 public class TagDAOImpl implements TagDAO {
@@ -104,10 +107,28 @@ public class TagDAOImpl implements TagDAO {
 		return true;
 	}
 
+	@SuppressWarnings("static-access")
 	@Override
-	public List<Tag> getList(int mappingId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Tag> getList(int tagId) throws Exception {
+		List<Tag> list = null;
+		PreparedStatement ps = null;
+		if (isTagsExists(tagId)) {
+			list = new ArrayList<Tag>();
+			list.add(getTags(tagId));
+		} else {
+			System.out.println("please provide a valid tag id");
+		}
+		DBConnect connect = new DBConnect();
+		ps = connect.preparedStatement("select * from Tag where mapping_Id =?");
+		ps.setInt(1, tagId);
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {
+			Tag tag = new Tag(rs.getInt("TAG_ID"), rs.getInt("MAPPING_ID"), rs.getString("DESCRIPTION"), rs.getString("IS_ACTIVE"),
+					FormatedDate.dateFormat(rs.getString("CREATED_ON")));
+
+			list.add(tag);
+		}
+		return list;
 	}
 
 }

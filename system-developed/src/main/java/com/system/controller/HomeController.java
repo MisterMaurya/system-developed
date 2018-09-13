@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.system.dao.impl.DeviceDAOImpl;
 import com.system.dao.impl.ProtocolDAOImpl;
 import com.system.dao.impl.TagDAOImpl;
-import com.system.entity.ChildTag;
 import com.system.entity.Device;
 import com.system.entity.Protocol;
 import com.system.entity.Tag;
@@ -101,8 +100,7 @@ public class HomeController {
 		check = tags.isTagsExists(Integer.parseInt(tag_Id));
 		if (check) {
 			try {
-				tag = new Tag(Integer.parseInt(tag_Id), description, is_Active,
-						FormatedDate.dateFormat(created_On));
+				tag = new Tag(Integer.parseInt(tag_Id), description, is_Active, FormatedDate.dateFormat(created_On));
 			} catch (Exception e) {
 				e.printStackTrace();
 				return "Something went wrong! Please provides valid parameter";
@@ -110,15 +108,12 @@ public class HomeController {
 		} else {
 			return "Something went wrong! Please provides valid parameter";
 		}
-		tag =  tags.addTag(tag);
+		tag = tags.addTag(tag);
 		return "child Tag successfully added";
 	}
-	
-	@RequestMapping(value = "/tags/{tagId}")
-	public List<Tag> getTags(@PathVariable("tagId")  String tagId) {
-		
-		
-		return null;
-	}
 
+	@RequestMapping(value = "/tags/{tagId}")
+	public List<Tag> getTags(@PathVariable("tagId") int tagId) throws Exception {
+		return tags.getList(tagId);
+	}
 }

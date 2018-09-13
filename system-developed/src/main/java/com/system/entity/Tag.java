@@ -56,6 +56,15 @@ public class Tag {
 		this.created_On = created_On;
 	}
 
+	public Tag(int tag_Id, int mapping_Id, String description, String is_Active, Date created_On) {
+		super();
+		this.tag_Id = tag_Id;
+		this.mapping_Id = mapping_Id;
+		this.description = description;
+		this.is_Active = is_Active;
+		this.created_On = created_On;
+	}
+	
 	/* All Getters and Setters method */
 
 	@Id // Specifies the primary key of an entity
@@ -89,7 +98,7 @@ public class Tag {
 	}
 
 	@Column(name = "CREATED_ON", nullable = false)
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	public Date getCreated_On() {
 		return created_On;
 	}
@@ -106,5 +115,9 @@ public class Tag {
 	public void setMapping_Id(int mapping_Id) {
 		this.mapping_Id = mapping_Id;
 	}
+
+
+	
+	
 
 }
