@@ -9,8 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -34,7 +32,7 @@ public class Device {
 	@JsonProperty("Operator_Id")
 	private int operator_Id;
 
-	 @JsonProperty("Protocols")
+	@JsonProperty("Protocols_Id")
 	private Set<Protocol> protocol_Id = new HashSet<Protocol>(0);
 
 	// Initializes default constructor
@@ -43,12 +41,11 @@ public class Device {
 	}
 
 	// Initializes field constructor
-	public Device(String description, String status, int operator_Id, Set<Protocol> protocol_Id) {
+	public Device(String description, String status, int operator_Id) {
 		super();
 		this.description = description;
 		this.status = status;
 		this.operator_Id = operator_Id;
-		this.protocol_Id = protocol_Id;
 	}
 
 	/* All Getters and Setters method */
@@ -93,9 +90,7 @@ public class Device {
 		this.operator_Id = operator_Id;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinTable(name = "DEVICE_PROTOCOL", joinColumns = { @JoinColumn(name = "DEVICE_ID") }, inverseJoinColumns = {
-			@JoinColumn(name = "PROTOCOL_ID") })
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "device", fetch = FetchType.EAGER)
 	public Set<Protocol> getProtocol_Id() {
 		return protocol_Id;
 	}

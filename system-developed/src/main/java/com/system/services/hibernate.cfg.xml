@@ -34,6 +34,8 @@
 		<mapping class="com.system.entity.Protocol" />
 		
 		
+		
+		
 
 	</session-factory>
 </hibernate-configuration>

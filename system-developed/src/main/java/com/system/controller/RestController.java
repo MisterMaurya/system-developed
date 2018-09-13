@@ -52,7 +52,7 @@ public class RestController {
 	}
 
 	// API for getting a tag details by tag_Id
-	@SuppressWarnings("static-access")
+	/*@SuppressWarnings("static-access")
 	@RequestMapping("/getTags/{tag_Id}")
 	public List<Tag> getTagDetails(@PathVariable("tag_Id") int tagId) {
 		List<Tag> list = new ArrayList<Tag>();
@@ -84,10 +84,10 @@ public class RestController {
 		}
 
 		return list;
-	}
+	}*/
 
 	// API for adding a device and protocol details
-	@RequestMapping(value = "/device")
+	/*@RequestMapping(value = "/device")
 	public Device[] deviceInfo() throws ParseException {
 		Set<Protocol> protocols1 = new HashSet<Protocol>();
 		protocols1.add(new Protocol("Secure Shell", FormatedDate.dateFormat("02-09-2018"),
@@ -106,10 +106,10 @@ public class RestController {
 		devices.insertDevice(device[0]);
 		devices.insertDevice(device[1]);
 		return device;
-	}
+	}*/
 
 	// API for adding a user details
-	@RequestMapping(value = "/user")
+	/*@RequestMapping(value = "/user")
 	public User userInfo() throws ParseException {
 		Set<Device> device = new HashSet<Device>();
 		device.add(devices.getDevice(6));
@@ -117,7 +117,7 @@ public class RestController {
 		User user = new User("Tanay", "abc@gmail.com", device, tag);
 		users.saveUser(user);
 		return user;
-	}
+	}*/
 
 	// API for getting a device details
 	@RequestMapping(value = "/getdevice")

@@ -20,7 +20,11 @@ public class Tag {
 	// Property name refers to name used externally, as the field name in JSON
 	// objects.
 	@JsonProperty("Tag_Id")
-	private int tag_Id;
+	protected int tag_Id;
+
+	@JsonProperty("Mapping_Id")
+	private int mapping_Id;
+
 	@JsonProperty("Description")
 	private String description;
 
@@ -30,17 +34,23 @@ public class Tag {
 	@JsonProperty("Created_On")
 	private Date created_On;
 
-	private int mappingId;
-
 	// Initializes default constructor
 	public Tag() {
 
 	}
 
 	// Initializes field constructor
-
 	public Tag(String description, String is_Active, Date created_On) {
 		super();
+
+		this.description = description;
+		this.is_Active = is_Active;
+		this.created_On = created_On;
+	}
+
+	public Tag(int mapping_Id, String description, String is_Active, Date created_On) {
+		super();
+		this.mapping_Id = mapping_Id;
 		this.description = description;
 		this.is_Active = is_Active;
 		this.created_On = created_On;
@@ -89,12 +99,12 @@ public class Tag {
 	}
 
 	@Column(name = "MAPPING_ID")
-	public int getMappingId() {
-		return mappingId;
+	public int getMapping_Id() {
+		return mapping_Id;
 	}
 
-	public void setMappingId(int mappingId) {
-		this.mappingId = mappingId;
+	public void setMapping_Id(int mapping_Id) {
+		this.mapping_Id = mapping_Id;
 	}
 
 }
