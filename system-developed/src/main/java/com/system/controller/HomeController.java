@@ -43,6 +43,7 @@ public class HomeController {
 	@Autowired
 	private DeviceUserMapDAOImpl map;
 
+	//add protocols
 	@RequestMapping(value = "/protocols", method = RequestMethod.GET)
 	public String addProtocols(@RequestParam Map<String, String> var) throws ParseException {
 		boolean check = false;
@@ -66,6 +67,7 @@ public class HomeController {
 		return " Protocol successfully added in your device";
 	}
 
+	//add devices 
 	@RequestMapping(value = "/devices")
 	public String addDevice(@RequestParam Map<String, String> var) throws ParseException {
 		Device device = null;
@@ -82,6 +84,7 @@ public class HomeController {
 		return "Device Successfully added";
 	}
 
+	//add parent tag
 	@RequestMapping(value = "/tags")
 	public String addTags(@RequestParam Map<String, String> var) {
 		Tag tag = null;
@@ -99,6 +102,7 @@ public class HomeController {
 		return "Tag successfully added";
 	}
 
+	//insert tag child 
 	@RequestMapping(value = "/tags/childstags")
 	public String addChildTags(@RequestParam Map<String, String> var) {
 		Tag tag = null;
@@ -127,6 +131,7 @@ public class HomeController {
 		return tags.getList(tagId);
 	}
 
+	//add user with tag id perform one to one relationship
 	@RequestMapping(value = "/users")
 	public String addUser(@RequestParam Map<String, String> var) {
 		String user_Name = var.get("name");
@@ -142,6 +147,7 @@ public class HomeController {
 		return "User Successfully added";
 	}
 
+	//establish a relation between user and devices many to many relationship
 	@RequestMapping(value = "/users/relation/devices")
 	public String establishRelationship(@RequestParam Map<String, String> var)
 			throws NumberFormatException, ParseException {
@@ -158,6 +164,8 @@ public class HomeController {
 
 	}
 
+	
+	//getting all user list
 	@RequestMapping("/users/list")
 	public List<User> getAllUser() {
 		UserDAOImpl list = new UserDAOImpl();

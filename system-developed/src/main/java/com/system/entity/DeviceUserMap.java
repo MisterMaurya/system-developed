@@ -13,9 +13,10 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-@Entity
-@Table(name = "DEVICE_USER_MAP")
+@Entity // Specifies that the class is an entity
+@Table(name = "DEVICE_USER_MAP") // specified for an entity class, and default value apply
 public class DeviceUserMap {
+
 	private long id;
 	private User user;
 	private Device device;
@@ -24,10 +25,12 @@ public class DeviceUserMap {
 	private String isActive;
 	private Date created_On;
 
-	public DeviceUserMap(){
-		
+	// Initializes default constructor
+	public DeviceUserMap() {
+
 	}
-	
+
+	// Initializes field constructor
 	public DeviceUserMap(User user, Device device, String isActive, Date created_On) {
 		super();
 		this.user = user;
@@ -36,9 +39,15 @@ public class DeviceUserMap {
 		this.created_On = created_On;
 	}
 
-	@Id
-	@GeneratedValue
-	@Column(name = "DEVICE_USER_ID")
+	/*
+	 * All Getters and Setters method
+	 */
+
+	@Id // Specifies the primary key of an entity
+	@GeneratedValue // Provides for the specification of generation strategies for the values of
+					// primary keys.
+	@Column(name = "DEVICE_USER_ID") // Is used to specify the mapped column for a persistent property or field
+
 	public long getId() {
 		return id;
 	}
