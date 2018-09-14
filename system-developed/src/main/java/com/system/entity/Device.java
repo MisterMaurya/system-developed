@@ -9,11 +9,10 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity // Specifies that the class is an entity
@@ -39,6 +38,7 @@ public class Device {
 
 	private Set<DeviceUserMap> device = new HashSet<DeviceUserMap>(0);
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "device", fetch = FetchType.EAGER)
 	public Set<DeviceUserMap> getDevice() {
 		return device;
@@ -103,6 +103,7 @@ public class Device {
 		this.operator_Id = operator_Id;
 	}
 
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "device", fetch = FetchType.EAGER)
 	public Set<Protocol> getProtocol_Id() {
 		return protocol_Id;
