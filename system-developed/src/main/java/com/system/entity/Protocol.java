@@ -45,11 +45,7 @@ public class Protocol {
 		this.effectivity_date = effectivity_date;
 		this.device = device;
 	}
-	
 
-	
-
-	
 	/* All Getters and Setters method */
 	@Id // Specifies the primary key of an entity
 	@GeneratedValue // Provides for the specification of generation strategies for the values of
@@ -63,7 +59,7 @@ public class Protocol {
 		this.protocol_id = protocol_id;
 	}
 
-	@Column(name = "TITLE", nullable = false)
+	@Column(name = "TITLE", nullable = false, unique = true)
 	public String getTitle() {
 		return title;
 	}

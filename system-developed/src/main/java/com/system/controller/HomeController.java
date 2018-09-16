@@ -33,6 +33,7 @@ public class HomeController {
 
 	@Autowired
 	private DeviceDAOImpl dev;
+	
 
 	@Autowired
 	private TagDAOImpl tags;
