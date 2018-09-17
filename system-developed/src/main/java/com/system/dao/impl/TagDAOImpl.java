@@ -65,12 +65,12 @@ public class TagDAOImpl implements TagDAO {
 	}
 
 	@Override
-	public boolean updateTagMapping(int mapping_Id, int tag_Id) {
+	public boolean updateTagMapping(int tag_Id) {
 		connect = new DBConnect();
 		session = connect.getSession();
 		try {
 			session.beginTransaction();
-			session.createQuery("UPDATE Tag set MAPPING_ID = '" + mapping_Id + "'where TAG_ID='" + tag_Id + "'")
+			session.createQuery("UPDATE Tag set MAPPING_ID = '" + tag_Id + "'where TAG_ID='" + tag_Id + "'")
 					.executeUpdate();
 			session.getTransaction().commit();
 		} catch (Exception e) {
@@ -98,7 +98,7 @@ public class TagDAOImpl implements TagDAO {
 			tag = session.createQuery(query).getSingleResult();
 			session.getTransaction().commit();
 		} catch (Exception e) {
-			e.printStackTrace();
+
 			return false;
 
 		} finally {
@@ -107,7 +107,7 @@ public class TagDAOImpl implements TagDAO {
 		return true;
 	}
 
-	@SuppressWarnings("static-access")
+//	@SuppressWarnings("static-access")
 	@Override
 	public List<Tag> getList(int tagId) throws Exception {
 		List<Tag> list = null;
@@ -123,10 +123,12 @@ public class TagDAOImpl implements TagDAO {
 		ps.setInt(1, tagId);
 		ResultSet rs = ps.executeQuery();
 		while (rs.next()) {
-			Tag tag = new Tag(rs.getInt("TAG_ID"), rs.getInt("MAPPING_ID"), rs.getString("DESCRIPTION"), rs.getString("IS_ACTIVE"),
-					FormatedDate.dateFormat(rs.getString("CREATED_ON")));
+			if (rs.getInt("MAPPING_ID") != rs.getInt("TAG_ID")) {
+				Tag tag = new Tag(rs.getInt("TAG_ID"), rs.getInt("MAPPING_ID"), rs.getString("DESCRIPTION"),
+						rs.getString("IS_ACTIVE"), FormatedDate.dateFormat(rs.getString("CREATED_ON")));
 
-			list.add(tag);
+				list.add(tag);
+			}
 		}
 		return list;
 	}

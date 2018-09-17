@@ -3,7 +3,9 @@ package com.system.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 
 import com.system.dao.ProtocolDAO;
@@ -16,7 +18,7 @@ public class ProtocolDAOImpl implements ProtocolDAO {
 	Session session = null;
 
 	@Override
-	public boolean addProtocol(Protocol protocol) {
+	public String addProtocol(Protocol protocol) {
 		connect = new DBConnect();
 		session = connect.getSession();
 		try {
@@ -24,13 +26,13 @@ public class ProtocolDAOImpl implements ProtocolDAO {
 			session.save(protocol);
 			session.getTransaction().commit();
 		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
+
+			return "Duplicate Entry/Please provide a valid paramter";
 
 		} finally {
 			session.close();
 		}
-		return true;
+		return "Protocols successfully added in your device";
 	}
 
 	@Override
@@ -50,6 +52,50 @@ public class ProtocolDAOImpl implements ProtocolDAO {
 			session.close();
 		}
 		return list;
+	}
+
+	@Override
+	public boolean updateProtocol(int protocolId, int deviceId) {
+		connect = new DBConnect();
+		session = connect.getSession();
+		try {
+			session.beginTransaction();
+			session.createQuery(
+					"UPDATE Protocol set DEVICE_ID = '" + deviceId + "'where PROTOCOLID='" + protocolId + "'")
+					.executeUpdate();
+			session.getTransaction().commit();
+		} catch (Exception e) {
+			
+			return false;
+
+		} finally {
+			session.close();
+		}
+		return true;
+	}
+
+	@Override
+	public Protocol getProtocol(int protocolId) {
+		Protocol protocol = null;
+		connect = new DBConnect();
+		try {
+			session = connect.getSession();
+			session.beginTransaction();
+			Criteria criteria = session.createCriteria(Protocol.class);
+			criteria.add(Restrictions.eq("protocol_id", protocolId));
+			protocol = (Protocol) criteria.uniqueResult();
+			if (protocol == null) {
+				return null;
+			}
+
+			session.getTransaction().commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			session.close();
+		}
+		return protocol;
 	}
 
 }

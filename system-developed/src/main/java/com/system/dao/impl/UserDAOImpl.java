@@ -11,7 +11,6 @@ import org.hibernate.Session;
 import org.springframework.stereotype.Service;
 
 import com.system.dao.UserDAO;
-import com.system.entity.Device;
 import com.system.entity.User;
 import com.system.services.DBConnect;
 

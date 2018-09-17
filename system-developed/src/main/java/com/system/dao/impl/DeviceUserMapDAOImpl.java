@@ -13,7 +13,7 @@ public class DeviceUserMapDAOImpl implements DeviceUserMapDAO {
 	Session session = null;
 
 	@Override
-	public boolean saveDeviceUserMap(DeviceUserMap deviceUserMap) {
+	public String saveDeviceUserMap(DeviceUserMap deviceUserMap) {
 		connect = new DBConnect();
 		session = connect.getSession();
 		try {
@@ -21,12 +21,12 @@ public class DeviceUserMapDAOImpl implements DeviceUserMapDAO {
 			session.save(deviceUserMap);
 			session.getTransaction().commit();
 		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
+
+			return "Something went wrong try again";
 
 		} finally {
 			session.close();
 		}
-		return true;
+		return "relationship successfully estabilish";
 	}
 }

@@ -4,6 +4,6 @@ import com.system.entity.DeviceUserMap;
 
 public interface DeviceUserMapDAO {
 	
-	public boolean saveDeviceUserMap(DeviceUserMap deviceUserMap);
+	public String saveDeviceUserMap(DeviceUserMap deviceUserMap);
 
 }

@@ -8,19 +8,19 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity // Specifies that the class is an entity
 @Table(name = "USER") // specified for an entity class, and default value apply
-@JsonIgnoreProperties(value = { "user_Id", "email", "tag_Id" ,"user_Name"})
 public class User {
 
 	/*
@@ -61,8 +61,9 @@ public class User {
 	 */
 
 	@Id // Specifies the primary key of an entity
-	@GeneratedValue // Provides for the specification of generation strategies for the values of
-					// primary keys.
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // Provides for the specification of generation strategies for
+														// the values of
+	// primary keys.
 	@Column(name = "USER_ID") // Is used to specify the mapped column for a persistent property or field
 	public int getUser_Id() {
 		return user_Id;
@@ -81,6 +82,7 @@ public class User {
 		this.user_Name = user_Name;
 	}
 
+	@JsonIgnore
 	@Email(message = "Please enter a valid email")
 	@Column(name = "EMAIL", nullable = false)
 	public String getEmail() {
@@ -102,6 +104,7 @@ public class User {
 	}
 
 	@JsonIgnore
+	@JoinColumn(name = "TAG_ID", unique = true)
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	public Tag getTag_Id() {
 		return tag_Id;

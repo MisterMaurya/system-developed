@@ -1,12 +1,8 @@
 package com.system.dao.impl;
 
-import java.sql.PreparedStatement;
-
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-
+import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 
 import com.system.dao.DeviceDAO;
@@ -37,49 +33,26 @@ public class DeviceDAOImpl implements DeviceDAO {
 	}
 
 	@Override
-	public Device getDevice(int device_Id) {
-		connect = new DBConnect();
-		session = connect.getSession();
+	public Device getDevice(int device_Id) throws Exception {
 		Device device = null;
+		connect = new DBConnect();
 		try {
+			session = connect.getSession();
 			session.beginTransaction();
-			CriteriaBuilder builder = session.getCriteriaBuilder();
-			CriteriaQuery<Device> query = builder.createQuery(Device.class);
-			Root<Device> root = query.from(Device.class);
+			Criteria criteria = session.createCriteria(Device.class);
+			criteria.add(Restrictions.eq("device_Id", device_Id));
+			device = (Device) criteria.uniqueResult();
+			if (device == null) {
+				return null;
+			}
 
-			query.select(root).where(builder.equal(root.get("device_Id"), device_Id));
-			device = session.createQuery(query).getSingleResult();
 			session.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
-
 		} finally {
 			session.close();
 		}
 		return device;
-	}
-
-	@Override
-	public boolean isDeviceExists(int device_Id) {
-		connect = new DBConnect();
-		session = connect.getSession();
-		Device device = null;
-		try {
-			session.beginTransaction();
-			CriteriaBuilder builder = session.getCriteriaBuilder();
-			CriteriaQuery<Device> query = builder.createQuery(Device.class);
-			Root<Device> root = query.from(Device.class);
-
-			query.select(root).where(builder.equal(root.get("device_Id"), device_Id));
-			device = session.createQuery(query).getSingleResult();
-			session.getTransaction().commit();
-		} catch (Exception e) {
-			return false;
-
-		} finally {
-			session.close();
-		}
-		return true;
 	}
 }

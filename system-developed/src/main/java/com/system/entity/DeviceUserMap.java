@@ -6,6 +6,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -44,9 +45,9 @@ public class DeviceUserMap {
 	 */
 
 	@Id // Specifies the primary key of an entity
-	@GeneratedValue // Provides for the specification of generation strategies for the values of
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // Provides for the specification of generation strategies for the values of
 					// primary keys.
-	@Column(name = "DEVICE_USER_ID") // Is used to specify the mapped column for a persistent property or field
+	@Column(name = "DEVICEUSER") // Is used to specify the mapped column for a persistent property or field
 
 	public long getId() {
 		return id;

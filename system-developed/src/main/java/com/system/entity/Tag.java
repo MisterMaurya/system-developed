@@ -68,7 +68,7 @@ public class Tag {
 	/* All Getters and Setters method */
 
 	@Id // Specifies the primary key of an entity
-	@GeneratedValue(strategy = GenerationType.AUTO) // Provides for the specification of generation strategies for the
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // Provides for the specification of generation strategies for the
 													// values of primary keys.
 	@Column(name = "TAG_ID") // Is used to specify the mapped column for a persistent property or field
 	public int getTag_Id() {

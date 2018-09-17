@@ -9,9 +9,11 @@ public interface TagDAO {
 
 	public Tag getTags(int tag_Id);
 
-	public boolean updateTagMapping(int mapping_Id, int tag_Id);
+	
 
 	public boolean isTagsExists(int tag_Id);
 
 	public List<Tag> getList(int tagId) throws Exception;
+
+	boolean updateTagMapping(int tag_Id);
 }

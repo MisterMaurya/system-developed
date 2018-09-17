@@ -1,11 +1,13 @@
 package com.system.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -13,12 +15,14 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity // Specifies that the class is an entity
 @Table(name = "PROTOCOL") // specified for an entity class, and default value apply
-public class Protocol {
+public class Protocol implements Serializable {
 
+	private static final long serialVersionUID = -1258281537334072792L;
 	// Property name refers to name used externally, as the field name in JSON
 	// objects.
 	@JsonProperty("Protocol_Id")
@@ -38,19 +42,25 @@ public class Protocol {
 	}
 
 	// Initializes field constructor
-	public Protocol(String title, Date created_On, Date effectivity_date, Device device) {
+	public Protocol(String title, Date created_On, Date effectivity_date) {
 		super();
 		this.title = title;
 		this.created_On = created_On;
 		this.effectivity_date = effectivity_date;
+
+	}
+
+	public Protocol(Device device) {
+		super();
 		this.device = device;
 	}
 
 	/* All Getters and Setters method */
 	@Id // Specifies the primary key of an entity
-	@GeneratedValue // Provides for the specification of generation strategies for the values of
-					// primary keys.
-	@Column(name = "PROTOCOL_ID") // Is used to specify the mapped column for a persistent property or field
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // Provides for the specification of generation strategies for
+														// the values of
+	// primary keys.
+	@Column(name = "PROTOCOLID") // Is used to specify the mapped column for a persistent property or field
 	public int getProtocol_id() {
 		return protocol_id;
 	}
@@ -88,6 +98,8 @@ public class Protocol {
 		this.effectivity_date = effectivity_date;
 	}
 
+	
+	@JsonIgnore
 	@JoinColumn(name = "DEVICE_ID")
 	@ManyToOne(cascade = CascadeType.ALL)
 	public Device getDevice() {

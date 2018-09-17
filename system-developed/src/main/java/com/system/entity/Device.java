@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -64,8 +65,9 @@ public class Device {
 	/* All Getters and Setters method */
 
 	@Id // Specifies the primary key of an entity
-	@GeneratedValue // Provides for the specification of generation strategies for the values of
-					// primary keys.
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // Provides for the specification of generation strategies for
+														// the values of
+	// primary keys.
 	@Column(name = "DEVICE_ID", nullable = false) // Is used to specify the mapped column for a persistent property or
 													// field
 	public int getDevice_Id() {

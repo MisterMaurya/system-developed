@@ -13,5 +13,7 @@ public interface UserDAO {
 	public boolean isUserExists(int id);
 	
 	public User getUser(int userId);
+	
+	
 
 }
